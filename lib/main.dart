@@ -1,115 +1,187 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    List<SearchInfo> suggestions = <SearchInfo>[];
+
+    final TextEditingController textController = TextEditingController();
+
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+      title: 'TestApp',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Container(
+            padding: const EdgeInsets.fromLTRB(20, 5, 50, 5),
+            child: TextField(
+              controller: textController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a search term'
+              ),
+            ),
+          ),
+          actions:  [
+            SearchButton(textController, suggestions),
+          ]
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        body: const InAppMap(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class _SearchButtonState extends State<SearchButton>
+{
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  Future<List<SearchInfo>> getSuggestions() async
+  {
+    List<SearchInfo> suggestions;
+    suggestions = await addressSuggestion(widget.textController.text);
 
-  void _incrementCounter() {
+    for (SearchInfo searchInfo in suggestions)
+     {
+       print(searchInfo.address?.country.toString());
+     }
+
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+
     });
+
+    return suggestions;
   }
 
+
+  Widget build(BuildContext context){
+    return TextButton(
+      onPressed: ()
+      {
+        print(widget.textController.text);
+        getSuggestions();
+       },
+
+      child: Text(
+          widget.textController.text,
+          style: const TextStyle(
+            color: Colors.red,
+          ),
+      ),
+    );
+  }
+}
+
+class SearchButton extends StatefulWidget
+{
+  final TextEditingController textController;
+  List<SearchInfo> suggestions;
+  SearchButton(this.textController, this.suggestions, {super.key});
+
+  @override
+  State<SearchButton> createState() => _SearchButtonState();
+}
+
+
+
+class _InAppMapState extends State<InAppMap>
+{
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    MapController mapController = MapController(
+      initMapWithUserPosition: false,
+      initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
+      areaLimit: BoundingBox( east: 10.4922941, north: 47.8084648, south: 45.817995, west: 5.9559113,),
+    );
+
+
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        body: OSMFlutter(
+          controller:mapController,
+          trackMyPosition: false,
+          initZoom: 12,
+          minZoomLevel: 2,
+          maxZoomLevel: 19,
+          stepZoom: 1.0,
+          userLocationMarker: UserLocationMaker(
+            personMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.location_history_rounded,
+                color: Colors.red,
+                size: 48,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            directionArrowMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.double_arrow,
+                size: 48,
+              ),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+          roadConfiguration: RoadConfiguration(
+            startIcon: const MarkerIcon(
+              icon: Icon(
+                Icons.person,
+                size: 64,
+                color: Colors.brown,
+              ),
+            ),
+            roadColor: Colors.yellowAccent,
+          ),
+          markerOption: MarkerOption(
+              defaultMarker: const MarkerIcon(
+                icon:  Icon(
+                  Icons.person_pin_circle,
+                  color: Colors.blue,
+                  size: 56,
+                ),
+              )
+          ),
+        )
     );
   }
 }
+
+class InAppMap extends StatefulWidget
+{
+  const InAppMap({super.key});
+
+  @override
+  State<InAppMap> createState() => _InAppMapState();
+}
+
+
+// class _MyCustomWidgetState extends State<CustomWidget> {
+//   String text = 'hi';
+//   Color color = Colors.red;
+//
+//   void _changeText() {
+//     setState(() {
+//       text = 'hoi';
+//     });
+//   }
+//
+//   @Override
+//   Widget build(BuildContext context)
+//   {
+//     return
+//   }
+//
+// }
+
+// class CustomWidget extends StatefulWidget {
+//   const CustomWidget({super.key});
+//
+//   @override
+//   State<CustomWidget> createState() => _MyCustomWidgetState();
+// }
