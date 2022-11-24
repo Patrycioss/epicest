@@ -17,24 +17,64 @@ class MyApp extends StatelessWidget {
 
     final TextEditingController textController = TextEditingController();
 
+    List<Widget> suggestionWidgets = <TextButton>[];
+
+    for (SearchInfo suggestion in suggestions)
+      {
+        suggestionWidgets.add(
+          Container(
+            color: Colors.indigo,
+            child: TextButton(
+              onPressed: ()
+              {
+                print('hello');
+              },
+              style: ButtonStyle(foregroundColor: MaterialStateProperty.resolveWith<Color?>((){return Colors.white}),
+              child: Text(
+                suggestion.address.toString(),
+              )
+
+            ),
+          )
+        );
+      }
+    suggestionWidgets.add(TextButton(onPressed: (){ print('hi');},
+    child: Text('hi')));
+
     return MaterialApp(
       title: 'TestApp',
       home: Scaffold(
         appBar: AppBar(
-          title: Container(
-            padding: const EdgeInsets.fromLTRB(20, 5, 50, 5),
-            child: TextField(
-              controller: textController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a search term'
-              ),
+            centerTitle: false,
+            toolbarHeight: 50 + (suggestionWidgets.length * 50),
+            flexibleSpace: Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  // width: 200,
+                  // height: 200,
+                  child: TextField (
+                    controller: textController,
+                    decoration: const InputDecoration(
+
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.yellow),
+                        ),
+                        hintText: 'Enter a search term'
+                    ),
+                  ),
+                ),
+                  suggestionWidgets[0]
+                ],
             ),
-          ),
+            ),
           actions:  [
             SearchButton(textController, suggestions),
-          ]
-      ),
+          ],
+        ),
         body: const InAppMap(),
       ),
     );
@@ -45,7 +85,7 @@ class _SearchButtonState extends State<SearchButton>
 {
   @override
 
-  Future<List<SearchInfo>> getSuggestions() async
+  void getSuggestions() async
   {
     List<SearchInfo> suggestions;
     suggestions = await addressSuggestion(widget.textController.text);
@@ -58,8 +98,6 @@ class _SearchButtonState extends State<SearchButton>
     setState(() {
 
     });
-
-    return suggestions;
   }
 
 
