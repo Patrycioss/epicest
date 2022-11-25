@@ -1,81 +1,135 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 
 
 class MyApp extends StatelessWidget {
+
+
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    List<SearchInfo> suggestions = <SearchInfo>[];
-
-    final TextEditingController textController = TextEditingController();
-
-    List<Widget> suggestionWidgets = <TextButton>[];
-
-    for (SearchInfo suggestion in suggestions)
-      {
-        suggestionWidgets.add(
-          Container(
-            color: Colors.indigo,
-            child: TextButton(
-              onPressed: ()
-              {
-                print('hello');
-              },
-              style: ButtonStyle(foregroundColor: MaterialStateProperty.resolveWith<Color?>((){return Colors.white}),
-              child: Text(
-                suggestion.address.toString(),
-              )
-
-            ),
-          )
-        );
-      }
-    suggestionWidgets.add(TextButton(onPressed: (){ print('hi');},
-    child: Text('hi')));
-
     return MaterialApp(
       title: 'TestApp',
-      home: Scaffold(
-        appBar: AppBar(
-            centerTitle: false,
-            toolbarHeight: 50 + (suggestionWidgets.length * 50),
-            flexibleSpace: Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  // width: 200,
-                  // height: 200,
-                  child: TextField (
-                    controller: textController,
-                    decoration: const InputDecoration(
+      home: Builder(
+        builder: (context) {
 
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.yellow),
-                        ),
-                        hintText: 'Enter a search term'
-                    ),
+          Size size = MediaQuery.of(context).size;
+          List<SearchInfo> suggestions = <SearchInfo>[];
+
+          final TextEditingController textController = TextEditingController();
+
+          List<Container> suggestionWidgets = <Container>[];
+
+
+          for (SearchInfo suggestion in suggestions)
+          {
+            suggestionWidgets.add(Container(
+                width: size.width/2,
+                decoration: BoxDecoration(
+                  color: Colors.indigo,
+                  border: Border.all(
+                    color: Colors.black,
                   ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-                  suggestionWidgets[0]
-                ],
+                child: TextButton(
+                  onPressed: ()
+                  {
+                    if (kDebugMode) {
+                      print('hello');
+                    }
+                  },
+                  child: Text(
+                    suggestion.address.toString(),
+                  ),
+                )
+            )
+            );
+          }
+
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+
+
+
+
+          return Scaffold(
+
+            appBar: AppBar(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                )
+              ),
+              elevation: 8,
+
+              backgroundColor: Colors.green,
+                centerTitle: false,
+                toolbarHeight: 50 + (suggestionWidgets.length * 50),
+                flexibleSpace: Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      // width: 200,
+                      // height: 200,
+                      child: TextField (
+                        controller: textController,
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.yellow),
+                            ),
+                            hintText: 'Enter a search term'
+                        ),
+                      ),
+                    ),
+                    Container(
+                        width: size.width/2,
+                        decoration: BoxDecoration(
+                          color: Colors.indigo,
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          children: suggestionWidgets,
+                        )
+                    ),
+                    ],
+                ),
+                ),
+              actions:  [
+                SearchButton(textController, suggestions),
+              ],
             ),
-            ),
-          actions:  [
-            SearchButton(textController, suggestions),
-          ],
-        ),
-        body: const InAppMap(),
+            body: const InAppMap(),
+          );
+        }
       ),
     );
   }
@@ -188,6 +242,31 @@ class _InAppMapState extends State<InAppMap>
         )
     );
   }
+}
+
+Container BoogerGenerator(Size size)
+{
+  return Container(
+      width: size.width/2,
+      decoration: BoxDecoration(
+        color: Colors.indigo,
+        border: Border.all(
+          color: Colors.black,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: TextButton(
+        onPressed: ()
+        {
+          if (kDebugMode) {
+            print('booger');
+          }
+        },
+        child: Text(
+          'booger',
+        ),
+      )
+  );
 }
 
 class InAppMap extends StatefulWidget
