@@ -1,73 +1,186 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 
 
 class MyApp extends StatelessWidget {
+
+
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+      title: 'TestApp',
+      home: Builder(
+        builder: (context) {
+
+          Size size = MediaQuery.of(context).size;
+          List<SearchInfo> suggestions = <SearchInfo>[];
+
+          final TextEditingController textController = TextEditingController();
+
+          List<Container> suggestionWidgets = <Container>[];
+
+
+          for (SearchInfo suggestion in suggestions)
+          {
+            suggestionWidgets.add(Container(
+                width: size.width/2,
+                decoration: BoxDecoration(
+                  color: Colors.indigo,
+                  border: Border.all(
+                    color: Colors.black,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: TextButton(
+                  onPressed: ()
+                  {
+                    if (kDebugMode) {
+                      print('hello');
+                    }
+                  },
+                  child: Text(
+                    suggestion.address.toString(),
+                  ),
+                )
+            )
+            );
+          }
+
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+          suggestionWidgets.add(BoogerGenerator(size));
+
+
+
+
+          return Scaffold(
+
+            appBar: AppBar(
+              drawer: FavoritesMenu(this),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                )
+              ),
+              elevation: 8,
+
+              backgroundColor: Colors.green,
+                centerTitle: false,
+                toolbarHeight: 50 + (suggestionWidgets.length * 50),
+                flexibleSpace: Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      // width: 200,
+                      // height: 200,
+                      child: TextField (
+                        controller: textController,
+                        decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.yellow),
+                            ),
+                            hintText: 'Enter a search term'
+                        ),
+                      ),
+                    ),
+                    Container(
+                        width: size.width/2,
+                        decoration: BoxDecoration(
+                          color: Colors.indigo,
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          children: suggestionWidgets,
+                        )
+                    ),
+                    ],
+                ),
+                ),
+              actions:  [
+                SearchButton(textController, suggestions),
+              ],
+            ),
+            body: const InAppMap(),
+          );
+        }
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Pag'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class _SearchButtonState extends State<SearchButton>
+{
+  void getSuggestions() async
+  {
+    List<SearchInfo> suggestions;
+    suggestions = await addressSuggestion(widget.textController.text);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+    for (SearchInfo searchInfo in suggestions)
+     {
+       print(searchInfo.address?.country.toString());
+     }
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+    setState(() {
+      
+    });
+    
 
-  final String title;
+  }
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  Widget build(BuildContext context){
+    return TextButton(
+      onPressed: ()
+      {
+        print(widget.textController.text);
+        getSuggestions();
+       },
+
+      child: Text(
+          widget.textController.text,
+          style: const TextStyle(
+            color: Colors.red,
+          ),
+      ),
+    );
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   bool iffing = false;
   void setIffing(bool iffing){
     setState(() {
       this.iffing = iffing;
     });
   }
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -196,6 +309,136 @@ class _FavoritesMenu extends State<FavoritesMenu>{
           ),
         ],
       ),
+    ),
+  }
+}
+
+class SearchButton extends StatefulWidget
+{
+  final TextEditingController textController;
+  List<SearchInfo> suggestions;
+  SearchButton(this.textController, this.suggestions, {super.key});
+
+  @override
+  State<SearchButton> createState() => _SearchButtonState();
+}
+
+
+
+class _InAppMapState extends State<InAppMap>
+{
+  @override
+  Widget build(BuildContext context) {
+
+    MapController mapController = MapController(
+      initMapWithUserPosition: false,
+      initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
+      areaLimit: BoundingBox( east: 10.4922941, north: 47.8084648, south: 45.817995, west: 5.9559113,),
+    );
+
+
+    return Scaffold(
+        body: OSMFlutter(
+          controller:mapController,
+          trackMyPosition: false,
+          initZoom: 12,
+          minZoomLevel: 2,
+          maxZoomLevel: 19,
+          stepZoom: 1.0,
+          userLocationMarker: UserLocationMaker(
+            personMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.location_history_rounded,
+                color: Colors.red,
+                size: 48,
+              ),
+            ),
+            directionArrowMarker: const MarkerIcon(
+              icon: Icon(
+                Icons.double_arrow,
+                size: 48,
+              ),
+            ),
+          ),
+          roadConfiguration: RoadConfiguration(
+            startIcon: const MarkerIcon(
+              icon: Icon(
+                Icons.person,
+                size: 64,
+                color: Colors.brown,
+              ),
+            ),
+            roadColor: Colors.yellowAccent,
+          ),
+          markerOption: MarkerOption(
+              defaultMarker: const MarkerIcon(
+                icon:  Icon(
+                  Icons.person_pin_circle,
+                  color: Colors.blue,
+                  size: 56,
+                ),
+              )
+          ),
+        )
     );
   }
 }
+
+Container BoogerGenerator(Size size)
+{
+  return Container(
+      width: size.width/2,
+      decoration: BoxDecoration(
+        color: Colors.indigo,
+        border: Border.all(
+          color: Colors.black,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: TextButton(
+        onPressed: ()
+        {
+          if (kDebugMode) {
+            print('booger');
+          }
+        },
+        child: Text(
+          'booger',
+        ),
+      )
+  );
+}
+
+class InAppMap extends StatefulWidget
+{
+  const InAppMap({super.key});
+
+  @override
+  State<InAppMap> createState() => _InAppMapState();
+}
+
+
+// class _MyCustomWidgetState extends State<CustomWidget> {
+//   String text = 'hi';
+//   Color color = Colors.red;
+//
+//   void _changeText() {
+//     setState(() {
+//       text = 'hoi';
+//     });
+//   }
+//
+//   @Override
+//   Widget build(BuildContext context)
+//   {
+//     return
+//   }
+//
+// }
+
+// class CustomWidget extends StatefulWidget {
+//   const CustomWidget({super.key});
+//
+//   @override
+//   State<CustomWidget> createState() => _MyCustomWidgetState();
+// }
