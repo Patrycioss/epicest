@@ -58,26 +58,11 @@ class MyApp extends StatelessWidget {
           suggestionWidgets.add(BoogerGenerator(size));
           suggestionWidgets.add(BoogerGenerator(size));
           suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-          suggestionWidgets.add(BoogerGenerator(size));
-
-
 
 
           return Scaffold(
 
             appBar: AppBar(
-              drawer: FavoritesMenu(this),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10.0),
@@ -174,59 +159,6 @@ class _SearchButtonState extends State<SearchButton>
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  bool iffing = false;
-  void setIffing(bool iffing){
-    setState(() {
-      this.iffing = iffing;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    if(!iffing) {
-      return Scaffold(
-        drawer: FavoritesMenu(this),
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline4,
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
-      );
-    }
-    else{
-      return const MyWidth();
-    }
-  }
-}
-
 class MyWidth extends StatelessWidget{
 
   const MyWidth({super.key});
@@ -244,7 +176,7 @@ class MyWidth extends StatelessWidget{
 
 }
 
-class FavoritesMenu extends StatefulWidget {
+/*class FavoritesMenu extends StatefulWidget {
   final _MyHomePageState page;
 
   const FavoritesMenu(this.page, {super.key});
@@ -309,9 +241,9 @@ class _FavoritesMenu extends State<FavoritesMenu>{
           ),
         ],
       ),
-    ),
+    );
   }
-}
+}*/
 
 class SearchButton extends StatefulWidget
 {
