@@ -1,26 +1,75 @@
+import 'dart:collection';
+
+import 'package:epicest_project/testing/statemanager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
+
+late final ValueNotifier<String> currentState;
+
 void main() {
-  runApp(MyApp());
+  StateManager stateManager = StateManager();
+  runApp(MyApp(stateManager));
 }
 
+class MyApp extends StatefulWidget{
 
+  final StateManager stateManager;
+  const MyApp(this.stateManager, {super.key});
 
-class MyApp extends StatelessWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
 
-  const MyApp({super.key});
+  void setCurrentState(String current){
+    setState(() {
+      widget.stateManager.currentState = current;
+    });
+  }
+
+  @override
+  initState(){
+    widget.stateManager.widgets.addAll({'MainPage': WidgetTest(widget.stateManager)});
+    widget.stateManager.currentState = widget.stateManager.widgets.entries.first.key;
+    currentState = ValueNotifier<String>("");
+    currentState.value = widget.stateManager.currentState;
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    Widget? otherwidgy = widget.stateManager.widgets[widget.stateManager.currentState];
+    if(otherwidgy != null){
+      return MaterialApp(
+        title: 'TestApp',
+        home: otherwidgy,
+      );
+    }
     return MaterialApp(
-      title: 'TestApp',
-      home: Builder(
-        builder: (context) {
+      home: Container(
+        color: Colors.red,
+      ),
+    );
+  }
+}
 
+class WidgetTest extends StatefulWidget{
+  /*final _MyAppState app;*/
+  final StateManager stateManager;
+  const WidgetTest(this.stateManager, {super.key});
+
+  @override
+  State<WidgetTest> createState() => _WidgetTestState();
+}
+
+class _WidgetTestState extends State<WidgetTest>
+{
+  @override
+  Widget build(BuildContext context){
+    return Builder(
+        builder: (context) {
           Size size = MediaQuery.of(context).size;
           List<SearchInfo> suggestions = <SearchInfo>[];
 
@@ -61,24 +110,31 @@ class MyApp extends StatelessWidget {
 
 
           return Scaffold(
-
+            drawer: FavoritesMenu(widget.stateManager),/*ValueListenableBuilder<String>(
+              builder: (BuildContext context, String value, Widget? child) {
+                // This builder will only get called when the _counter
+                // is updated.
+                return FavoritesMenu(widget.stateManager);
+              },
+              valueListenable: currentState,
+            ),*/
             appBar: AppBar(
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                )
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                  )
               ),
               elevation: 8,
 
               backgroundColor: Colors.green,
-                centerTitle: false,
-                toolbarHeight: 50 + (suggestionWidgets.length * 50),
-                flexibleSpace: Container(
-                  alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              centerTitle: false,
+              toolbarHeight: 100 + (suggestionWidgets.length * 50),
+              flexibleSpace: Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(
                       // width: 200,
@@ -106,9 +162,9 @@ class MyApp extends StatelessWidget {
                           children: suggestionWidgets,
                         )
                     ),
-                    ],
+                  ],
                 ),
-                ),
+              ),
               actions:  [
                 SearchButton(textController, suggestions),
               ],
@@ -116,7 +172,6 @@ class MyApp extends StatelessWidget {
             body: const InAppMap(),
           );
         }
-      ),
     );
   }
 }
@@ -159,27 +214,11 @@ class _SearchButtonState extends State<SearchButton>
   }
 }
 
-class MyWidth extends StatelessWidget{
+class FavoritesMenu extends StatefulWidget {
+  /*final _MyAppState myApp;*/
+  final StateManager stateManager;
 
-  const MyWidth({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: const Text("Test"),
-      ),
-    );
-  }
-
-}
-
-/*class FavoritesMenu extends StatefulWidget {
-  final _MyHomePageState page;
-
-  const FavoritesMenu(this.page, {super.key});
+  const FavoritesMenu(this.stateManager, {super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -191,17 +230,16 @@ class MyWidth extends StatelessWidget{
   // always marked "final".
 
   @override
-  State<FavoritesMenu> createState() => _FavoritesMenu(state: this.page);
+  State<FavoritesMenu> createState() => _FavoritesMenu();
 }
 
 class _FavoritesMenu extends State<FavoritesMenu>{
-  _MyHomePageState state;
-
-  _FavoritesMenu({required this.state});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Align(
+        alignment: Alignment.topLeft,
+        child: Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
@@ -227,7 +265,9 @@ class _FavoritesMenu extends State<FavoritesMenu>{
             title: const Text('Favorite one'),
             subtitle: const Text("My house"),
             onTap: () {
-              widget.page.setIffing(true);
+              widget.stateManager.currentState = "";
+
+              currentState.value = widget.stateManager.currentState;
               Navigator.pop(context);
             },
           ),
@@ -235,15 +275,17 @@ class _FavoritesMenu extends State<FavoritesMenu>{
             title: const Text('Favorite two'),
             subtitle: const Text("My booger"),
             onTap: () {
-              widget.page.setIffing(true);
+              widget.stateManager.currentState = "";
+              currentState.value = widget.stateManager.currentState;
               Navigator.pop(context);
             },
           ),
         ],
       ),
+    ),
     );
   }
-}*/
+}
 
 class SearchButton extends StatefulWidget
 {
