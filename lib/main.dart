@@ -61,11 +61,15 @@ class MyApp extends StatelessWidget
                 ),
                 body:
                 Stack
-                  (
+                (
                   children:
-                  const [
-                    InAppMap(),
-                    SearchSuggestions(),
+                  [
+                    const InAppMap(),
+                    Container
+                    (
+                      alignment: Alignment.center,
+                      child: const SearchSuggestions(),
+                    ),
                   ],
                 ),
               );

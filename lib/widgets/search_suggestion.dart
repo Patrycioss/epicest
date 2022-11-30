@@ -14,11 +14,27 @@ class SearchSuggestion extends StatelessWidget
   @override
   Widget build(BuildContext context) {
 
-    String string;
+    String string = '';
+
+
+    if (searchInfo.address != null)
+    {
+      if (searchInfo.address!.country != null) string += searchInfo.address!.country!;
+      string += '  ';
+
+      if (searchInfo.address!.name != null) string += searchInfo.address!.name!;
+      string += '  ';
+
+      if (searchInfo.address!.street != null) string += searchInfo.address!.street!;
+      string += '  ';
+
+      if (searchInfo.address!.postcode != null) string += searchInfo.address!.postcode!;
+      string += '  ';
+    }
 
 
     return Container(
-        width: Information.i.appSize.width,
+        width: Information.i.appSize.width*0.9,
         decoration: BoxDecoration(
           color: Colors.indigo,
           border: Border.all(
@@ -30,7 +46,7 @@ class SearchSuggestion extends StatelessWidget
           onPressed: ()
           {
             if (kDebugMode) print('Click');
-            Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo.point!);
+            Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
           },
           style: const ButtonStyle(
             alignment: Alignment.center,
@@ -38,7 +54,7 @@ class SearchSuggestion extends StatelessWidget
           child: FittedBox(
             fit: BoxFit.fitHeight,
             child: Text(
-              searchInfo.address.toString(),
+              string,
             ),
           )
         )
