@@ -15,6 +15,28 @@ class _InAppMapState extends State<InAppMap>
 {
   @override
   Widget build(BuildContext context) {
+
+    Provider.of<MapNotifier>(context, listen: false)
+        .mapController.addMarker
+      (
+        GeoPoint
+        (
+          latitude: 52.219772238231606,
+          longitude: 6.889461611120473
+        )
+      , markerIcon:
+          const MarkerIcon
+          (
+            icon:
+              Icon
+              (
+                Icons.school,
+                color: Colors.green,
+                size: 70,
+              ),
+          )
+    );
+
     return
       OSMFlutter
       (
@@ -30,7 +52,7 @@ class _InAppMapState extends State<InAppMap>
             const MarkerIcon(
               icon:
               Icon
-                (
+              (
                 Icons.location_history_rounded,
                 color: Colors.red,
                 size: 48,

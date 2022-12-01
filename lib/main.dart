@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget
         currentWidget = value;
       }
     });
-
     return MaterialApp(
       title: 'TestApp',
       home: currentWidget,

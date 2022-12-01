@@ -14,18 +14,26 @@ class SearchButton extends StatefulWidget
 
 class _SearchButtonState extends State<SearchButton>
 {
+  String previousSearch = '';
+
+
   void getSuggestions() async
   {
+    if (previousSearch == widget._textEditingController.text || widget._textEditingController.text.isEmpty) return;
+
     List<SearchInfo> suggestions;
     suggestions = await addressSuggestion(widget._textEditingController.text, limitInformation: 4);
 
     suggestions.removeWhere((element) => element.point == null);
     updateSuggestions(suggestions);
+
+    previousSearch = widget._textEditingController.text;
   }
 
   void updateSuggestions(List<SearchInfo> suggestions)
   {
     Provider.of<SuggestionNotifier>(context, listen: false).setNewSuggestions(suggestions, false);
+    Provider.of<SuggestionNotifier>(context, listen: false).setVisibility(true);
   }
 
   @override

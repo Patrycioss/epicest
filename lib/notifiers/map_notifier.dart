@@ -30,11 +30,12 @@ class MapNotifier extends ChangeNotifier
 
     if (searchInfo.address!.postcode != null)
     {
-      await _mapController.setZoom(zoomLevel: 20, stepZoom: 5);
+      print("ha");
+      await _mapController.setZoom(zoomLevel: 19, stepZoom: 5);
     }
     else {
       await _mapController.setZoom(zoomLevel: 10, stepZoom: 5);
-      _mapController.addMarker(_geoPoint, markerIcon:MarkerIcon(
+      _mapController.addMarker(_geoPoint, markerIcon:const MarkerIcon(
           icon: Icon(
             Icons.location_city,
             color: Colors.red,
