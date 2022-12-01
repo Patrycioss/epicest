@@ -23,30 +23,52 @@ class _MainScreenState extends State<MainScreen>
         builder: (context) {
 
           Information(MediaQuery.of(context).size);
-          MapManager();
 
-          return Scaffold(
-            drawer: const FavoritesMenu(),
-            appBar: AppBar(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
-                  )
-              ),
-              elevation: 8,
+          final TextEditingController textEditingController = TextEditingController();
 
-              backgroundColor: Colors.green,
-              centerTitle: false,
-              toolbarHeight: 50 + (SearchManager.searchSuggestions.length * 50),
-
-              flexibleSpace: SearchManager.searchWidget,
-              actions:  [
-                SearchManager.searchButton,
-                const SettingsButton(),
+          return MultiProvider(
+              providers:
+              [
+                ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
+                ChangeNotifierProvider(create: (context) => MapNotifier()),
               ],
-            ),
-            body: MapManager.inAppMap,
+              builder: (context, child) {
+                return Scaffold(
+                  appBar: AppBar(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        )
+                    ),
+                    elevation: 8,
+
+                    backgroundColor: Colors.green,
+                    centerTitle: false,
+                    toolbarHeight: 60,
+
+                    flexibleSpace: SearchBar(textEditingController),
+                    actions:
+                    [
+                      SearchButton(textEditingController),
+                      SearchButton(textEditingController),
+                    ],
+                  ),
+                  body:
+                  Stack
+                    (
+                    children:
+                    [
+                      const InAppMap(),
+                      Container
+                        (
+                        alignment: Alignment.center,
+                        child: const SearchSuggestions(),
+                      ),
+                    ],
+                  ),
+                );
+              }
           );
         }
     );
