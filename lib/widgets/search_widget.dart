@@ -18,7 +18,7 @@ class _SearchWidgetState extends State<SearchWidget>
       Container
       (
         alignment: Alignment.topLeft,
-        margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+        margin: const EdgeInsets.fromLTRB(50, 25, 0, 0),
         child:
           Column
           (

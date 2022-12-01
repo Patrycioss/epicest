@@ -1,12 +1,16 @@
+import 'package:epicest_project/testing/statemanager.dart';
+import 'package:epicest_project/widgets/main_screen.dart';
+import 'package:epicest_project/widgets/settings_widget.dart';
 import 'package:flutter/material.dart';
-
-import 'utils/information.dart';
-import 'managers/map_manager.dart';
-import 'managers/search_manager.dart';
+import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => StateManager(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget
@@ -16,38 +20,18 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) {
 
+    StateManager stateManager = StateManager();
+    Widget currentWidget = Container();
+
+    stateManager.widgets.forEach((key, value) {
+      if(key.compareTo(Provider.of<StateManager>(context).getCurrentState()) == 0){
+        currentWidget = value;
+      }
+    });
+
     return MaterialApp(
       title: 'TestApp',
-      home: Builder(
-          builder: (context) {
-
-          Information(MediaQuery.of(context).size);
-          MapManager();
-
-          return Scaffold(
-
-            appBar: AppBar(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                )
-              ),
-              elevation: 8,
-
-              backgroundColor: Colors.green,
-                centerTitle: false,
-                toolbarHeight: 50 + (SearchManager.searchSuggestions.length * 50),
-
-              flexibleSpace: SearchManager.searchWidget,
-              actions:  [
-                SearchManager.searchButton,
-              ],
-            ),
-            body: MapManager.inAppMap,
-          );
-        }
-      ),
+      home: currentWidget,
     );
   }
 }
