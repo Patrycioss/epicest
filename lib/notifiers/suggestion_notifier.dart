@@ -9,12 +9,12 @@ class SuggestionNotifier extends ChangeNotifier
   final List<SearchSuggestion> _suggestions = [];
   UnmodifiableListView<SearchSuggestion> get suggestions => UnmodifiableListView(_suggestions);
 
-  void setNewSuggestions(List<SearchInfo> suggestions)
+  void setNewSuggestions(List<SearchInfo> suggestions, bool favorites)
   {
     _suggestions.clear();
 
     for (SearchInfo suggestion in suggestions) {
-      _suggestions.add(SearchSuggestion(suggestion));
+      _suggestions.add(SearchSuggestion(suggestion, favorites));
     }
     notifyListeners();
   }

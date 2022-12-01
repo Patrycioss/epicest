@@ -1,4 +1,5 @@
 import 'package:epicest_project/notifiers/map_notifier.dart';
+import 'package:epicest_project/testing/statemanager.dart';
 import 'package:epicest_project/widgets/map_widget.dart';
 
 import 'notifiers/suggestion_notifier.dart';
