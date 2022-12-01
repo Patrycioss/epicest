@@ -1,4 +1,5 @@
 import 'package:epicest_project/notifiers/map_notifier.dart';
+import 'package:epicest_project/notifiers/suggestion_notifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -46,6 +47,7 @@ class SearchSuggestion extends StatelessWidget
           onPressed: ()
           {
             if (kDebugMode) print('Click');
+            Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
             Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
           },
           style: const ButtonStyle(
