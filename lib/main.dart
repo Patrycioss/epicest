@@ -68,7 +68,16 @@ class MyApp extends StatelessWidget
                     Container
                     (
                       alignment: Alignment.center,
-                      child: const SearchSuggestions(),
+                      child:
+                        Consumer<SuggestionNotifier>
+                        (
+                          builder: (context, notifier, child) =>
+                            Visibility
+                            (
+                              visible: Provider.of<SuggestionNotifier>(context, listen: false).visible,
+                              child: const SearchSuggestions()
+                            ),
+                        ),
                     ),
                   ],
                 ),
