@@ -12,7 +12,11 @@ import 'widgets/search_suggestions.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => StateManager(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget
@@ -22,61 +26,18 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) {
 
+    StateManager stateManager = StateManager();
+    Widget currentWidget = Container();
+
+    stateManager.widgets.forEach((key, value) {
+      if(key.compareTo(Provider.of<StateManager>(context).getCurrentState()) == 0){
+        currentWidget = value;
+      }
+    });
+
     return MaterialApp(
       title: 'TestApp',
-      home: Builder(
-          builder: (context) {
-
-          Information(MediaQuery.of(context).size);
-
-          final TextEditingController textEditingController = TextEditingController();
-
-          return MultiProvider(
-            providers:
-            [
-              ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
-              ChangeNotifierProvider(create: (context) => MapNotifier()),
-            ],
-            builder: (context, child) {
-              return Scaffold(
-                appBar: AppBar(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0),
-                      )
-                  ),
-                  elevation: 8,
-
-                  backgroundColor: Colors.green,
-                  centerTitle: false,
-                  toolbarHeight: 60,
-
-                  flexibleSpace: SearchBar(textEditingController),
-                  actions:
-                  [
-                    SearchButton(textEditingController),
-                    SearchButton(textEditingController),
-                  ],
-                ),
-                body:
-                Stack
-                (
-                  children:
-                  [
-                    const InAppMap(),
-                    Container
-                    (
-                      alignment: Alignment.center,
-                      child: const SearchSuggestions(),
-                    ),
-                  ],
-                ),
-              );
-            }
-          );
-        }
-      ),
+      home: currentWidget,
     );
   }
 }
