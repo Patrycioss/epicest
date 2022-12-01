@@ -1,6 +1,8 @@
 
 
+import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
 import '../testing/statemanager.dart';
@@ -44,13 +46,15 @@ class _FavoritesMenu extends State<FavoritesMenu>{
             subtitle: const Text("Placeholder"),
             onTap: () {
               Navigator.pop(context);
+              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21979168320528, longitude: 6.889457162218579), address: Address()));
             },
           ),
           ListTile(
-            title: const Text('Hogeschool Saxion - Edith Stein'),
+            title: const Text('Saxion University'),
             subtitle: const Text("Placeholder"),
             onTap: () {
               Navigator.pop(context);
+              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21859095075787, longitude: 6.887492144103807), address: Address()));
             },
           ),
         ],

@@ -10,7 +10,8 @@ import '../utils/information.dart';
 class SearchSuggestion extends StatelessWidget
 {
   final SearchInfo searchInfo;
-  const SearchSuggestion(this.searchInfo,{super.key});
+  final bool favorites;
+  const SearchSuggestion(this.searchInfo, this.favorites,{super.key});
 
   @override
   Widget build(BuildContext context) {

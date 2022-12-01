@@ -1,10 +1,15 @@
+import 'package:epicest_project/widgets/search_bar.dart';
+import 'package:epicest_project/widgets/search_button_widget.dart';
+import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:epicest_project/widgets/settings_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../favorites/favorites_menu.dart';
-import '../managers/map_manager.dart';
-import '../managers/search_manager.dart';
+import '../notifiers/map_notifier.dart';
+import '../notifiers/suggestion_notifier.dart';
 import '../utils/information.dart';
+import 'map_widget.dart';
 
 class MainScreen extends StatefulWidget{
 
@@ -34,6 +39,7 @@ class _MainScreenState extends State<MainScreen>
               ],
               builder: (context, child) {
                 return Scaffold(
+                  drawer: const FavoritesMenu(),
                   appBar: AppBar(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -47,11 +53,11 @@ class _MainScreenState extends State<MainScreen>
                     centerTitle: false,
                     toolbarHeight: 60,
 
-                    flexibleSpace: SearchBar(textEditingController),
+                    flexibleSpace: SearchBar(textEditingController, false),
                     actions:
                     [
                       SearchButton(textEditingController),
-                      SearchButton(textEditingController),
+                      const SettingsButton(),
                     ],
                   ),
                   body:

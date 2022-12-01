@@ -32,7 +32,7 @@ class _SearchButtonState extends State<SearchButton>
 
   void updateSuggestions(List<SearchInfo> suggestions)
   {
-    Provider.of<SuggestionNotifier>(context, listen: false).setNewSuggestions(suggestions);
+    Provider.of<SuggestionNotifier>(context, listen: false).setNewSuggestions(suggestions, false);
     Provider.of<SuggestionNotifier>(context, listen: false).setVisibility(true);
   }
 
