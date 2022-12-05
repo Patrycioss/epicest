@@ -1,3 +1,4 @@
+import 'package:epicest_project/notifiers/information_notifier.dart';
 import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/notifiers/suggestion_notifier.dart';
 import 'package:flutter/foundation.dart';
@@ -48,7 +49,9 @@ class SearchSuggestion extends StatelessWidget
           {
             if (kDebugMode) print('Click');
             Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
+            Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
+            FocusManager.instance.primaryFocus?.unfocus();
           },
           style: const ButtonStyle(
             alignment: Alignment.center,

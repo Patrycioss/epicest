@@ -1,14 +1,8 @@
-import 'package:epicest_project/notifiers/map_notifier.dart';
-import 'package:epicest_project/widgets/map_widget.dart';
 
-import 'notifiers/suggestion_notifier.dart';
-import 'widgets/search_bar.dart';
-import 'widgets/search_button_widget.dart';
+import 'testing/statemanager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'utils/information.dart';
-import 'widgets/search_suggestions.dart';
 
 
 void main() {
