@@ -13,7 +13,7 @@ class SearchSuggestion extends StatelessWidget
 {
   final SearchInfo searchInfo;
   final bool favorites;
-  const SearchSuggestion(this.searchInfo, this.favorites,{super.key});
+  const SearchSuggestion(this.searchInfo, this.favorites, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class SearchSuggestion extends StatelessWidget
               Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             }
             else{
-              Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo, context);
+              Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo);
             }
           },
           style: const ButtonStyle(

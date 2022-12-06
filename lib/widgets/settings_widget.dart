@@ -1,3 +1,4 @@
+import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/widgets/search_bar.dart';
 import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ import 'highlight_widget.dart';
 
 class SettingsWidget extends StatefulWidget{
   final Favorites favorites;
-  const SettingsWidget(this.favorites, {super.key});
+  final GlobalKey<ScaffoldState> globalKey;
+  const SettingsWidget(this.favorites, this.globalKey, {super.key});
 
   @override
   createState() => _SettingsWidget();

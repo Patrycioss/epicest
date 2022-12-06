@@ -1,3 +1,4 @@
+/*
 import 'package:epicest_project/notifiers/suggestion_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -51,4 +52,4 @@ class _SearchButtonState extends State<SearchButton>
       ),
     );
   }
-}
+}*/
