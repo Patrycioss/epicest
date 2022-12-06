@@ -48,7 +48,7 @@ class _SettingsWidget extends State<SettingsWidget>{
                       Provider.of<StateManager>(context, listen: false).setCurrentState("MainPage");
                     },
                     child: const Image(
-                      image: AssetImage('assets/Marker.svg'),
+                      image: AssetImage('assets/mapIcon.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
