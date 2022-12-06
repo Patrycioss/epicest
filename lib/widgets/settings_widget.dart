@@ -69,7 +69,7 @@ class _SettingsWidget extends State<SettingsWidget>{
                     Container
                       (
                       alignment: Alignment.center,
-                      child: const SearchSuggestions(),
+                      child: const SearchSuggestions(true),
                     ),
                     const HighlightWidget(),
                   ],

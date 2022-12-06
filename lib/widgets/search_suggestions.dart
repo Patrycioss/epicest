@@ -9,9 +9,12 @@ class _SearchSuggestionsState extends State<SearchSuggestions>
     return Consumer<SuggestionNotifier>
     (
       builder: (context, notifier, child) =>
-        Column
-        (
-          children: notifier.suggestions,
+        Container(
+          margin: EdgeInsets.fromLTRB(0, (widget.favorites ? 0 : 80), 0, 0),
+          child: Column
+          (
+            children: notifier.suggestions,
+          ),
         ),
     );
   }
@@ -19,7 +22,8 @@ class _SearchSuggestionsState extends State<SearchSuggestions>
 
 class SearchSuggestions extends StatefulWidget
 {
-  const SearchSuggestions({super.key});
+  final bool favorites;
+  const SearchSuggestions(this.favorites, {super.key});
   @override
   State<StatefulWidget> createState() => _SearchSuggestionsState();
 }

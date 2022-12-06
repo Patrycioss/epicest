@@ -59,7 +59,7 @@ class _SearchBarState extends State<SearchBar>
         Container
         (
           alignment: Alignment.center,
-          margin: const EdgeInsets.fromLTRB(45, 25, 0, 0),
+          margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
           child: TextField
           (
             maxLength: 22,
