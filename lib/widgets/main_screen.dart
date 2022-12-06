@@ -1,18 +1,24 @@
-import 'package:epicest_project/notifiers/information_notifier.dart';
-import 'package:epicest_project/widgets/information_widget.dart';
+import 'notifiers/information_notifier.dart';
+import 'widgets/information_widget.dart';
+
+import 'widgets/search_bar.dart';
+import 'widgets/search_button_widget.dart';
+import 'widgets/search_suggestions.dart';
+import 'widgets/settings_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'search_bar.dart';
+import '../favorites/favorites.dart';
+import '../favorites/favorites_menu.dart';
 import '../notifiers/map_notifier.dart';
 import '../notifiers/suggestion_notifier.dart';
 import '../utils/information.dart';
 import 'map_widget.dart';
-import 'search_suggestions.dart';
 
 class MainScreen extends StatefulWidget{
 
-  const MainScreen({super.key});
+  final Favorites favorites;
+  const MainScreen(this.favorites, {super.key});
 
   @override
   createState() => _MainScreenState();
@@ -40,6 +46,7 @@ class _MainScreenState extends State<MainScreen>
                 return Scaffold(
                   extendBodyBehindAppBar: true,
                   backgroundColor: Colors.transparent,
+                  drawer: FavoritesMenu(widget.favorites),
                   appBar: AppBar(
                     leading: TextButton(onPressed: () {  }, child: Text('haha'),),
                     flexibleSpace: Container(
@@ -58,12 +65,11 @@ class _MainScreenState extends State<MainScreen>
                     centerTitle: false,
                     // toolbarHeight: 60,
 
-                    // flexibleSpace: SearchBar(textEditingController),
-                    // actions:
-                    // [
-                    //   SearchButton(textEditingController),
-                    //   SearchButton(textEditingController),
-                    // ],
+                    flexibleSpace: SearchBar(textEditingController, false),
+                    actions:
+                    const [
+                      SettingsButton(),
+                    ],
                   ),
                   body:
                   Stack
@@ -74,7 +80,16 @@ class _MainScreenState extends State<MainScreen>
                       Container
                         (
                         alignment: Alignment.center,
-                        child: const SearchSuggestions(),
+                        child:
+                        Consumer<SuggestionNotifier>
+                          (
+                          builder: (context, notifier, child) =>
+                              Visibility
+                                (
+                                  visible: Provider.of<SuggestionNotifier>(context, listen: false).visible,
+                                  child: const SearchSuggestions()
+                              ),
+                        ),
                       ),
                       Consumer<InformationNotifier>
                       (

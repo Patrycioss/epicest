@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
+import '../favorites/favorites.dart';
 import '../utils/information.dart';
 
 class SearchSuggestion extends StatelessWidget
 {
   final SearchInfo searchInfo;
-  const SearchSuggestion(this.searchInfo,{super.key});
+  final bool favorites;
+  const SearchSuggestion(this.searchInfo, this.favorites,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +50,14 @@ class SearchSuggestion extends StatelessWidget
           onPressed: ()
           {
             if (kDebugMode) print('Click');
-            Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
-            Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
-            Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
-            FocusManager.instance.primaryFocus?.unfocus();
+            if(!favorites){
+              Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
+              Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
+              Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
+            }
+            else{
+              Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo, context);
+            }
           },
           style: const ButtonStyle(
             alignment: Alignment.center,

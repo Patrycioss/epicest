@@ -1,14 +1,21 @@
-
 import 'testing/statemanager.dart';
+
+import 'favorites/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() {
-  runApp(ChangeNotifierProvider(
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => StateManager()),
+        ChangeNotifierProvider(create: (context) => Favorites()),
+      ],
+      builder: (context, child) {
+        return const MyApp();
+      }
+    /*ChangeNotifierProvider(
       create: (context) => StateManager(),
-      child: const MyApp(),
+      child: const MyApp(),*/
     ),
   );
 }
