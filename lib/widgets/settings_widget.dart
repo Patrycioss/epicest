@@ -101,20 +101,28 @@ class _SettingsWidget extends State<SettingsWidget>{
                   )
               ),
               child: Container(
-                alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: ListView(
                   children: [
-                    const Text(
-                      "Add a favorite address!",
-                    ),//for physical keyboard press
-                    SearchBar(_controller, true),
+                    Column(
+                      children: [
+                        const Text("Add a favorite address!"),//for physical keyboard press
+                        SearchBar(_controller, true),
+                      ],
+                    ),
                     Container
-                      (
+                    (
                       alignment: Alignment.center,
                       child: const SearchSuggestions(true),
                     ),
-                    const HighlightWidget(),
+                    Container
+                    (
+                      child: Column(
+                        children: const [
+                          HighlightWidget(),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
