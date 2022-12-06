@@ -1,3 +1,4 @@
+import 'package:epicest_project/build_context_storer/build_context_storer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class Favorites extends ChangeNotifier{
     );
   }*/
 
-  void addFavorite(SearchInfo suggestion, BuildContext context){
+  void addFavorite(SearchInfo suggestion){
     String? state = suggestion.address?.state;
     String? country = suggestion.address?.country;
     String? city = suggestion.address?.city;
@@ -37,9 +38,10 @@ class Favorites extends ChangeNotifier{
         title: Text(city ?? state ?? country ?? "Not found"),
         subtitle: Text("${name ?? ""} ${postcode ?? ""} ${street ?? ""}"),
         onTap: () {
-          Navigator.pop(context);
+          BuildContext? context = BuildContextStorer.context;
+          Navigator.pop(context!);
           if(Provider.of<StateManager>(context, listen: false).getCurrentState().compareTo("MainPage") == 0){
-            Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: suggestion.point, address: suggestion.address));
+            Provider.of<MapNotifier>(context!, listen: false).setPoint(SearchInfo(point: suggestion.point, address: suggestion.address));
           }
         },
       ),

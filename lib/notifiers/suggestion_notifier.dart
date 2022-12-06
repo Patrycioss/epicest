@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:epicest_project/widgets/search_suggestion.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 class SuggestionNotifier extends ChangeNotifier
