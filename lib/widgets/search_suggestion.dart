@@ -1,3 +1,4 @@
+import 'package:epicest_project/notifiers/information_notifier.dart';
 import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/notifiers/suggestion_notifier.dart';
 import 'package:flutter/foundation.dart';
@@ -52,6 +53,7 @@ class SearchSuggestion extends StatelessWidget
             if(!favorites){
               Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
               Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
+              Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             }
             else{
               Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo, context);

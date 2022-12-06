@@ -47,53 +47,42 @@ class _SearchBarState extends State<SearchBar>
 
   @override
   Widget build(BuildContext context) {
-
-    // _focusNode.addListener(() {
-    //   Provider.of<SuggestionNotifier>(context, listen:false).setVisibility(_focusNode.hasFocus);
-    //   print('hi');
-    //   FocusScope.of(context).unfocus();
-    // });
-
-
-
-    return Container
+    return Stack
     (
-      alignment: Alignment.center,
-      margin: const EdgeInsets.fromLTRB(45, 25, 0, 0),
-      child: TextField (
-        // focusNode: _focusNode,
-        // onTap: ()
-        // {
-        //   if (_focusNode.hasFocus) {
-        //     _focusNode.unfocus();
-        //
-        //   } else if (!_focusNode.hasFocus) {
-        //     _focusNode.focusInDirection(TraversalDirection.left);
-        //   }
-        // },
-
-        onEditingComplete: (){
-          print("oneditting");
-        },
-        onSubmitted: (String string){
-          print("onsubmitted");
-        },
-
-        controller: widget._textEditingController,
-        decoration: const InputDecoration(
-            border: InputBorder.none,
-            hintText: 'Enter a search term'
+      children:
+      [
+        const Image
+        (
+          image: AssetImage('assets/search.png'),
         ),
-        onChanged: (String value){
-          if(timer == null){
-            startTimer(widget.favorites);
-          }
-          else {
-            timer?.cancel();
-            startTimer(widget.favorites);
-          }
-        },
-      ),
+
+        Container
+        (
+          alignment: Alignment.center,
+          margin: const EdgeInsets.fromLTRB(45, 25, 0, 0),
+          child: TextField
+          (
+            maxLength: 22,
+            controller: widget._textEditingController,
+            decoration:
+              const InputDecoration
+              (
+                counter: SizedBox.shrink(),
+                border: InputBorder.none,
+                hintText: 'Enter a search term'
+              ),
+              onChanged: (String value){
+                if(timer == null){
+                  startTimer(widget.favorites);
+                }
+                else {
+                  timer?.cancel();
+                  startTimer(widget.favorites);
+                }
+              },
+          ),
+        ),
+      ]
     );
   }
 }

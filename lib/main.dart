@@ -1,9 +1,8 @@
-import 'package:epicest_project/testing/statemanager.dart';
+import 'testing/statemanager.dart';
 
 import 'favorites/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(MultiProvider(
