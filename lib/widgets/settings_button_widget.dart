@@ -15,17 +15,19 @@ class _SettingsButtonState extends State<SettingsButton>{
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         width: 50,
+        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: TextButton(
           onPressed: () {
             Provider.of<StateManager>(context, listen: false).setCurrentState("SettingsPage");
           },
-          child: const Image(
-            image: AssetImage('assets/SettingsIcon.svg'),
-            fit: BoxFit.cover,
+          child: const Icon(
+            Icons.settings,
+            size: 40,
+            color: Colors.black,
           ),
-      )
+        )
     );
   }
 

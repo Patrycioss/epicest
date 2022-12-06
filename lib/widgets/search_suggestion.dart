@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
+import '../favorites/favorites.dart';
 import '../utils/information.dart';
 
 class SearchSuggestion extends StatelessWidget
@@ -48,8 +49,13 @@ class SearchSuggestion extends StatelessWidget
           onPressed: ()
           {
             if (kDebugMode) print('Click');
-            Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
-            Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
+            if(!favorites){
+              Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
+              Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
+            }
+            else{
+              Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo, context);
+            }
           },
           style: const ButtonStyle(
             alignment: Alignment.center,

@@ -1,15 +1,11 @@
-
-
-import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
-import '../testing/statemanager.dart';
+import 'favorites.dart';
 
 class FavoritesMenu extends StatefulWidget {
-
-  const FavoritesMenu({super.key});
+  final Favorites favorites;
+  const FavoritesMenu(this.favorites, {super.key});
 
   @override
   State<FavoritesMenu> createState() => _FavoritesMenu();
@@ -36,17 +32,33 @@ class _FavoritesMenu extends State<FavoritesMenu>{
               Text(
                   'Favorites',
                   style: TextStyle(
-                      fontSize: 40, fontWeight: FontWeight.bold)
+                      fontSize: 40, fontWeight: FontWeight.bold
+                  )
               ),
               ),
             ),
           ),
-          ListTile(
+          Column(
+            children: [
+              for(var i in Provider.of<Favorites>(context, listen: false).suggestions) i
+            ],
+          ),
+          /*ChangeNotifierProvider(
+            create: (context) => Favorites(),
+            builder: (context, child) {
+              return Column(
+                children: [
+                  for(var i in Provider.of<Favorites>(context, listen: false).suggestions) i
+                ],
+              );
+            }
+          ),*/
+          /*ListTile(
             title: const Text('Hogeschool Saxion - Epy Drost'),
             subtitle: const Text("Placeholder"),
             onTap: () {
               Navigator.pop(context);
-              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21979168320528, longitude: 6.889457162218579), address: Address()));
+              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21979168320528, longitude: 6.889457162218579), address: Address(postcode: "7511 JL", city: "Enschede", street: "Van Galenstraat 19", country: "Netherlands")));
             },
           ),
           ListTile(
@@ -54,9 +66,9 @@ class _FavoritesMenu extends State<FavoritesMenu>{
             subtitle: const Text("Placeholder"),
             onTap: () {
               Navigator.pop(context);
-              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21859095075787, longitude: 6.887492144103807), address: Address()));
+              Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: GeoPoint(latitude: 52.21859095075787, longitude: 6.887492144103807), address: Address(postcode: "7511 JX", city: "Enschede", street: "Ariënsplein 1", country: "Netherlands")));
             },
-          ),
+          ),*/
         ],
       ),
     );

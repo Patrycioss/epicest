@@ -12,14 +12,14 @@ class _SearchBarState extends State<SearchBar>
   Timer? timer;
   int added = 0;
 
-  void startTimer() {
+  void startTimer(bool favorites) {
     const oneSec = Duration(milliseconds: 200);
     timer = Timer.periodic(
       oneSec,
           (Timer timer) => setState(() {
         if (added >= 1200) {
           timer.cancel();
-          getSuggestions();
+          getSuggestions(favorites);
           print("Timer done!");
         }
         else {
@@ -31,18 +31,18 @@ class _SearchBarState extends State<SearchBar>
     );
   }
 
-  void getSuggestions() async
+  void getSuggestions(bool favorites) async
   {
     List<SearchInfo> suggestions;
     suggestions = await addressSuggestion(widget._textEditingController.text, limitInformation: 4);
 
     suggestions.removeWhere((element) => element.point == null);
-    updateSuggestions(suggestions);
+    updateSuggestions(suggestions, favorites);
   }
 
-  void updateSuggestions(List<SearchInfo> suggestions)
+  void updateSuggestions(List<SearchInfo> suggestions, bool favorites)
   {
-    Provider.of<SuggestionNotifier>(context, listen: false).setNewSuggestions(suggestions, false);
+    Provider.of<SuggestionNotifier>(context, listen: false).setNewSuggestions(suggestions, favorites);
   }
 
   @override
@@ -86,11 +86,11 @@ class _SearchBarState extends State<SearchBar>
         ),
         onChanged: (String value){
           if(timer == null){
-            startTimer();
+            startTimer(widget.favorites);
           }
           else {
             timer?.cancel();
-            startTimer();
+            startTimer(widget.favorites);
           }
         },
       ),
