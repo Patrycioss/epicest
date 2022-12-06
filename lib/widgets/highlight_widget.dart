@@ -25,24 +25,23 @@ class _HighlightWidgetState extends State<HighlightWidget>{
   Widget build(BuildContext context) {
     return Container(
         /*width: Information.i.appSize.width * 0.95,*/
-        decoration: BoxDecoration(
-          border: Border.all(
-              width: 2,
-              color: Colors.red
-          )
-        ),
+        // decoration: BoxDecoration(
+        //   border: Border.all(
+        //       width: 2,
+        //       color: Colors.red
+        //   )
+        // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
               onTapDown: (TapDownDetails details){
                 setBooger(!booger);
-                print("Test");
               },
               child:
-                SvgPicture.asset(
-                  "assets/Header.svg",
-                ),
+                const Image(
+                  image: AssetImage('assets/epy_drost_banner.png'),
+                )
             ),
             Visibility(
               visible: booger,
