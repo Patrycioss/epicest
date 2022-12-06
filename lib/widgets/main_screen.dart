@@ -48,8 +48,8 @@ class _MainScreenState extends State<MainScreen>
                   drawer: FavoritesMenu(widget.favorites),
                   appBar: AppBar(
                     flexibleSpace: Container(
-                        margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
-                        child: SearchBar(textEditingController, false)
+                      margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
+                      child: SearchBar(textEditingController, false),
                     ),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -66,6 +66,7 @@ class _MainScreenState extends State<MainScreen>
                     const [
                       SettingsButton(),
                     ],
+
                   ),
                   body:
                   Stack
