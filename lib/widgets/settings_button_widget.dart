@@ -25,7 +25,7 @@ class _SettingsButtonState extends State<SettingsButton>{
           child: const Icon(
             Icons.settings,
             size: 40,
-            color: Colors.black,
+            color: Colors.grey,
           ),
         )
     );
