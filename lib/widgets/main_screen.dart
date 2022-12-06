@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen>
                           flexibleSpace:
                             Container
                             (
-                              margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
+                              margin: const EdgeInsets.fromLTRB(50, 35, 60, 0),
                               child: SearchBar(textEditingController, false)
                             ),
 
