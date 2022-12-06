@@ -41,7 +41,7 @@ class Favorites extends ChangeNotifier{
           BuildContext? context = BuildContextStorer.context;
           Navigator.pop(context!);
           if(Provider.of<StateManager>(context, listen: false).getCurrentState().compareTo("MainPage") == 0){
-            Provider.of<MapNotifier>(context!, listen: false).setPoint(SearchInfo(point: suggestion.point, address: suggestion.address));
+            Provider.of<MapNotifier>(context, listen: false).setPoint(SearchInfo(point: suggestion.point, address: suggestion.address));
           }
         },
       ),

@@ -29,7 +29,6 @@ class MapNotifier extends ChangeNotifier
 
     if (searchInfo.address!.postcode != null)
     {
-      print("ha");
       await _mapController.setZoom(zoomLevel: 19, stepZoom: 5);
     }
     else {
