@@ -43,6 +43,10 @@ class _InAppMapState extends State<InAppMap>
         FocusScope.of(context).unfocus();
         Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
       },
+      onTap: (){
+        FocusScope.of(context).unfocus();
+        Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
+      },
       child:
         OSMFlutter
           (
