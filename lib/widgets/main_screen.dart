@@ -8,7 +8,6 @@ import '../notifiers/map_notifier.dart';
 import '../notifiers/suggestion_notifier.dart';
 import '../utils/information.dart';
 import 'map_widget.dart';
-import 'search_button_widget.dart';
 import 'search_suggestions.dart';
 
 class MainScreen extends StatefulWidget{
@@ -42,8 +41,9 @@ class _MainScreenState extends State<MainScreen>
                   extendBodyBehindAppBar: true,
                   backgroundColor: Colors.transparent,
                   appBar: AppBar(
+                    leading: TextButton(onPressed: () {  }, child: Text('haha'),),
                     flexibleSpace: Container(
-                        margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
                         child: SearchBar(textEditingController)
                     ),
                     shape: const RoundedRectangleBorder(
