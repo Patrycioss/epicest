@@ -1,3 +1,5 @@
+import 'package:epicest_project/build_context_storer/build_context_storer.dart';
+
 import '../notifiers/information_notifier.dart';
 import '../widgets/information_widget.dart';
 
@@ -46,6 +48,7 @@ class _MainScreenState extends State<MainScreen>
 
             builder: (context, child)
             {
+              BuildContextStorer.context = context;
               return Scaffold
               (
                 extendBodyBehindAppBar: true,
