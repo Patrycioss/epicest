@@ -5,6 +5,7 @@ import 'package:epicest_project/widgets/settings_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../favorites/favorites.dart';
 import '../favorites/favorites_menu.dart';
 import '../notifiers/map_notifier.dart';
 import '../notifiers/suggestion_notifier.dart';
@@ -13,7 +14,8 @@ import 'map_widget.dart';
 
 class MainScreen extends StatefulWidget{
 
-  const MainScreen({super.key});
+  final Favorites favorites;
+  const MainScreen(this.favorites, {super.key});
 
   @override
   createState() => _MainScreenState();
@@ -39,7 +41,7 @@ class _MainScreenState extends State<MainScreen>
               ],
               builder: (context, child) {
                 return Scaffold(
-                  drawer: const FavoritesMenu(),
+                  drawer: FavoritesMenu(widget.favorites),
                   appBar: AppBar(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -55,9 +57,9 @@ class _MainScreenState extends State<MainScreen>
 
                     flexibleSpace: SearchBar(textEditingController, false),
                     actions:
-                    [
-                      SearchButton(textEditingController),
-                      const SettingsButton(),
+                    const [
+                      //SearchButton(textEditingController),
+                      SettingsButton(),
                     ],
                   ),
                   body:
@@ -69,7 +71,16 @@ class _MainScreenState extends State<MainScreen>
                       Container
                         (
                         alignment: Alignment.center,
-                        child: const SearchSuggestions(),
+                        child:
+                        Consumer<SuggestionNotifier>
+                          (
+                          builder: (context, notifier, child) =>
+                              Visibility
+                                (
+                                  visible: Provider.of<SuggestionNotifier>(context, listen: false).visible,
+                                  child: const SearchSuggestions()
+                              ),
+                        ),
                       ),
                     ],
                   ),

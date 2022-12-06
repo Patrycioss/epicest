@@ -1,21 +1,22 @@
-import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/testing/statemanager.dart';
-import 'package:epicest_project/widgets/map_widget.dart';
 
-import 'notifiers/suggestion_notifier.dart';
-import 'widgets/search_bar.dart';
-import 'widgets/search_button_widget.dart';
+import 'favorites/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'utils/information.dart';
-import 'widgets/search_suggestions.dart';
-
 
 void main() {
-  runApp(ChangeNotifierProvider(
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => StateManager()),
+        ChangeNotifierProvider(create: (context) => Favorites()),
+      ],
+      builder: (context, child) {
+        return const MyApp();
+      }
+    /*ChangeNotifierProvider(
       create: (context) => StateManager(),
-      child: const MyApp(),
+      child: const MyApp(),*/
     ),
   );
 }

@@ -1,18 +1,17 @@
-import 'dart:async';
-
 import 'package:epicest_project/widgets/search_bar.dart';
 import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../favorites/favorites.dart';
 import '../favorites/favorites_menu.dart';
 import '../notifiers/suggestion_notifier.dart';
 import '../testing/statemanager.dart';
+import 'highlight_widget.dart';
 
 class SettingsWidget extends StatefulWidget{
-
-  const SettingsWidget({super.key});
+  final Favorites favorites;
+  const SettingsWidget(this.favorites, {super.key});
 
   @override
   createState() => _SettingsWidget();
@@ -25,12 +24,22 @@ class _SettingsWidget extends State<SettingsWidget>{
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
-        ],
-        builder: (context, child){
-          return Scaffold(
-            drawer: const FavoritesMenu(),
+      providers: [
+        ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
+      ],
+      builder: (context, child){
+        return GestureDetector(
+          onTap: () {
+            FocusNode? focusNode = FocusManager.instance.primaryFocus;
+            if(focusNode != null){
+              if(focusNode.hasPrimaryFocus){
+                FocusManager.instance.primaryFocus?.unfocus();
+                Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
+              }
+            }
+          },
+          child: Scaffold(
+            drawer: FavoritesMenu(widget.favorites),
             appBar: AppBar(
                 backgroundColor: Colors.green,
                 actions: [
@@ -44,16 +53,14 @@ class _SettingsWidget extends State<SettingsWidget>{
                     ),
                   ),
                 ]
-
             ),
             body: Container(
               alignment: Alignment.topLeft,
               color: Colors.green,
               child: Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: ListView(
                   children: [
                     const Text(
                       "Add a favorite address!",
@@ -64,14 +71,14 @@ class _SettingsWidget extends State<SettingsWidget>{
                       alignment: Alignment.center,
                       child: const SearchSuggestions(),
                     ),
+                    const HighlightWidget(),
                   ],
                 ),
               ),
             ),
-          );
-        }
+          ),
+        );
+      }
     );
-
   }
-
 }
