@@ -40,23 +40,64 @@ class _SettingsWidget extends State<SettingsWidget>{
           },
           child: Scaffold(
             drawer: FavoritesMenu(widget.favorites),
-            appBar: AppBar(
-                backgroundColor: Colors.green,
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<StateManager>(context, listen: false).setCurrentState("MainPage");
-                    },
-                    child: const Image(
-                      image: AssetImage('assets/mapIcon.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ]
-            ),
+            appBar:
+              AppBar
+              (
+                flexibleSpace:
+                 Container
+                 (
+                   decoration:
+                     const BoxDecoration
+                       (
+                         gradient:
+                         LinearGradient
+                           (
+                             begin: Alignment.topRight,
+                             end: Alignment.bottomLeft,
+                             colors:
+                             [
+                               Color(0xFFA0CFEC),
+                               Color(0xFF71C6C9),
+                               Color(0xFF57B2B7)
+                             ]
+                         )
+                     ),
+                   child:
+                     AppBar(
+                         backgroundColor: Colors.transparent,
+                         elevation: 0,
+                         actions: [
+                           TextButton(
+                             onPressed: () {
+                               Provider.of<StateManager>(context, listen: false).setCurrentState("MainPage");
+                             },
+                             child: const Image(
+                               image: AssetImage('assets/mapIcon.png'),
+                               fit: BoxFit.cover,
+                             ),
+                           ),
+                         ]
+                     ),
+                 ),
+              ),
             body: Container(
               alignment: Alignment.topLeft,
-              color: Colors.green,
+              decoration:
+              const BoxDecoration
+                (
+                  gradient:
+                  LinearGradient
+                    (
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors:
+                      [
+                        Color(0xFFA0CFEC),
+                        Color(0xFF71C6C9),
+                        Color(0xFF57B2B7)
+                      ]
+                  )
+              ),
               child: Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
