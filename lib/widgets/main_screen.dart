@@ -1,7 +1,10 @@
-import 'package:epicest_project/widgets/search_bar.dart';
-import 'package:epicest_project/widgets/search_button_widget.dart';
-import 'package:epicest_project/widgets/search_suggestions.dart';
-import 'package:epicest_project/widgets/settings_button_widget.dart';
+import 'notifiers/information_notifier.dart';
+import 'widgets/information_widget.dart';
+
+import 'widgets/search_bar.dart';
+import 'widgets/search_button_widget.dart';
+import 'widgets/search_suggestions.dart';
+import 'widgets/settings_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +22,6 @@ class MainScreen extends StatefulWidget{
 
   @override
   createState() => _MainScreenState();
-
 }
 
 class _MainScreenState extends State<MainScreen>
@@ -38,11 +40,19 @@ class _MainScreenState extends State<MainScreen>
               [
                 ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
                 ChangeNotifierProvider(create: (context) => MapNotifier()),
+                ChangeNotifierProvider(create: (context) => InformationNotifier()),
               ],
               builder: (context, child) {
                 return Scaffold(
+                  extendBodyBehindAppBar: true,
+                  backgroundColor: Colors.transparent,
                   drawer: FavoritesMenu(widget.favorites),
                   appBar: AppBar(
+                    leading: TextButton(onPressed: () {  }, child: Text('haha'),),
+                    flexibleSpace: Container(
+                        margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
+                        child: SearchBar(textEditingController)
+                    ),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10.0),
@@ -51,20 +61,19 @@ class _MainScreenState extends State<MainScreen>
                     ),
                     elevation: 8,
 
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.red,
                     centerTitle: false,
-                    toolbarHeight: 60,
+                    // toolbarHeight: 60,
 
                     flexibleSpace: SearchBar(textEditingController, false),
                     actions:
                     const [
-                      //SearchButton(textEditingController),
                       SettingsButton(),
                     ],
                   ),
                   body:
                   Stack
-                    (
+                  (
                     children:
                     [
                       const InAppMap(),
@@ -81,6 +90,22 @@ class _MainScreenState extends State<MainScreen>
                                   child: const SearchSuggestions()
                               ),
                         ),
+                      ),
+                      Consumer<InformationNotifier>
+                      (
+
+                        builder: (context, notifier, child) =>
+                          Visibility
+                          (
+                            visible: notifier.visible,
+                            child:
+                              Container
+                              (
+                                alignment: Alignment.bottomCenter,
+                                child:
+                                  const InformationWidget()
+                              ),
+                         ),
                       ),
                     ],
                   ),
