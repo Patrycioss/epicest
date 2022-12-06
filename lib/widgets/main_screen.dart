@@ -1,10 +1,9 @@
-import 'notifiers/information_notifier.dart';
-import 'widgets/information_widget.dart';
+import '../notifiers/information_notifier.dart';
+import '../widgets/information_widget.dart';
 
-import 'widgets/search_bar.dart';
-import 'widgets/search_button_widget.dart';
-import 'widgets/search_suggestions.dart';
-import 'widgets/settings_button_widget.dart';
+import '../widgets/search_bar.dart';
+import '../widgets/search_suggestions.dart';
+import '../widgets/settings_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,10 +47,9 @@ class _MainScreenState extends State<MainScreen>
                   backgroundColor: Colors.transparent,
                   drawer: FavoritesMenu(widget.favorites),
                   appBar: AppBar(
-                    leading: TextButton(onPressed: () {  }, child: Text('haha'),),
                     flexibleSpace: Container(
                         margin: const EdgeInsets.fromLTRB(50, 35, 50, 0),
-                        child: SearchBar(textEditingController)
+                        child: SearchBar(textEditingController, false)
                     ),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -64,8 +62,6 @@ class _MainScreenState extends State<MainScreen>
                     backgroundColor: Colors.red,
                     centerTitle: false,
                     // toolbarHeight: 60,
-
-                    flexibleSpace: SearchBar(textEditingController, false),
                     actions:
                     const [
                       SettingsButton(),
@@ -87,7 +83,7 @@ class _MainScreenState extends State<MainScreen>
                               Visibility
                                 (
                                   visible: Provider.of<SuggestionNotifier>(context, listen: false).visible,
-                                  child: const SearchSuggestions()
+                                  child: const SearchSuggestions(false)
                               ),
                         ),
                       ),
