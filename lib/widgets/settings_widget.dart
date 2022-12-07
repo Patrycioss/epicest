@@ -1,4 +1,3 @@
-import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/widgets/search_bar.dart';
 import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
@@ -120,13 +119,23 @@ class _SettingsWidget extends State<SettingsWidget>{
                           child: const SearchSuggestions(true)
                       ),
                     ),
-                    Container
-                    (
-                      child: Column(
-                        children: const [
-                          HighlightWidget(),
-                        ],
-                      ),
+
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 20, 0,10),
+                      child: const Center(child: Text
+                        ('Highlights',
+                        style: TextStyle
+                          (
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      )),
+                    ),
+
+                    Column(
+                      children: const [
+                        HighlightWidget(),
+                      ],
                     )
                   ],
                 ),

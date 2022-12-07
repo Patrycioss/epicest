@@ -56,9 +56,6 @@ class _InAppMapState extends State<InAppMap>
           minZoomLevel: 2,
           maxZoomLevel: 19,
           stepZoom: 1.0,
-          onLocationChanged: (GeoPoint point) {
-            print("Test");
-          },
           userLocationMarker:
           UserLocationMaker(
             personMarker:

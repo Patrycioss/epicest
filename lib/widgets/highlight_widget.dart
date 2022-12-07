@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/information.dart';
 
 class HighlightWidget extends StatefulWidget{
 
@@ -32,26 +29,24 @@ class _HighlightWidgetState extends State<HighlightWidget>{
             showEpyInformation(!_showEpyInformation);
           },
           child:
-              Container(
-                child: Column
-                (
-                  children:
-                  [
-                    Image(
-                      image: AssetImage('assets/epy_drost_banner.png'),
+              Column
+              (
+                children:
+                [
+                 const  Image(
+                    image: AssetImage('assets/epy_drost_banner.png'),
 
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: const ListTile
+                    (
+                      leading: Icon(Icons.school),
+                      title: Text('Epy Drost'),
+                      subtitle: Text('Saxion University of Applied Sciences Enschede'),
                     ),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile
-                      (
-                        leading: Icon(Icons.school),
-                        title: Text('Epy Drost'),
-                        subtitle: Text('Saxion University of Applied Sciences Enschede'),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               )
         ),
         Visibility(
@@ -59,8 +54,8 @@ class _HighlightWidgetState extends State<HighlightWidget>{
           child:
           Container(
             color: Colors.white,
-            child: ListTile(
-              leading: Text('hi'),
+            child: const ListTile(
+              leading: Text('Awesome text about Epy Drost'),
             ),
           ),
         ),

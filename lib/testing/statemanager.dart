@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:epicest_project/favorites/favorites.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/main_screen.dart';

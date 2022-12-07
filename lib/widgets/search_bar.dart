@@ -20,13 +20,11 @@ class _SearchBarState extends State<SearchBar>
         if (added >= 1200) {
           timer.cancel();
           getSuggestions(favorites);
-          print("Timer done!");
           Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(true);
           added = 0;
         }
         else {
           added = added + oneSec.inMilliseconds;
-          print("Timer is going...");
         }
       },
       ),
