@@ -51,11 +51,13 @@ class _SearchBarState extends State<SearchBar>
     (
       children:
       [
-        const Image
-        (
-          image: AssetImage('assets/search.png'),
+        Center(
+          child:
+          const Image
+            (
+            image: AssetImage('assets/search.png'),
+          ),
         ),
-
         Container
         (
           alignment: Alignment.center,
