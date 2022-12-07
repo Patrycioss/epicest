@@ -60,26 +60,28 @@ class _SearchBarState extends State<SearchBar>
         (
           alignment: Alignment.center,
           margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-          child: TextField
-          (
-            maxLength: 22,
-            controller: widget._textEditingController,
-            decoration:
-              const InputDecoration
-              (
-                counter: SizedBox.shrink(),
-                border: InputBorder.none,
-                hintText: 'Enter a search term'
-              ),
-              onChanged: (String value){
-                if(timer == null){
-                  startTimer(widget.favorites);
-                }
-                else {
-                  timer?.cancel();
-                  startTimer(widget.favorites);
-                }
-              },
+          child: Center(
+            child: TextField
+            (
+              maxLength: 22,
+              controller: widget._textEditingController,
+              decoration:
+                const InputDecoration
+                (
+                  counter: SizedBox.shrink(),
+                  border: InputBorder.none,
+                  hintText: 'Enter a search term'
+                ),
+                onChanged: (String value){
+                  if(timer == null){
+                    startTimer(widget.favorites);
+                  }
+                  else {
+                    timer?.cancel();
+                    startTimer(widget.favorites);
+                  }
+                },
+            ),
           ),
         ),
       ]
