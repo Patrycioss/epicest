@@ -4,6 +4,7 @@ import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../build_context_storer/build_context_storer.dart';
 import '../favorites/favorites.dart';
 import '../favorites/favorites_menu.dart';
 import '../notifiers/suggestion_notifier.dart';
@@ -30,6 +31,7 @@ class _SettingsWidget extends State<SettingsWidget>{
         ChangeNotifierProvider(create: (context) => SuggestionNotifier()),
       ],
       builder: (context, child){
+        BuildContextStorer.settingsScreenContext = context;
         return GestureDetector(
           onTap: () {
             FocusNode? focusNode = FocusManager.instance.primaryFocus;
@@ -113,7 +115,10 @@ class _SettingsWidget extends State<SettingsWidget>{
                     Container
                     (
                       alignment: Alignment.center,
-                      child: const SearchSuggestions(true),
+                      child: Visibility(
+                          visible: Provider.of<SuggestionNotifier>(context).visible,
+                          child: const SearchSuggestions(true)
+                      ),
                     ),
                     Container
                     (

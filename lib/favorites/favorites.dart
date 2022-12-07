@@ -38,7 +38,7 @@ class Favorites extends ChangeNotifier{
         title: Text(city ?? state ?? country ?? "Not found"),
         subtitle: Text("${name ?? ""} ${postcode ?? ""} ${street ?? ""}"),
         onTap: () {
-          BuildContext? context = BuildContextStorer.context;
+          BuildContext? context = BuildContextStorer.mainScreenContext;
           Navigator.pop(context!);
           if(Provider.of<StateManager>(context, listen: false).getCurrentState().compareTo("MainPage") == 0){
             Provider.of<MapNotifier>(context!, listen: false).setPoint(SearchInfo(point: suggestion.point, address: suggestion.address));
