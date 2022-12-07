@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:epicest_project/notifiers/information_notifier.dart';
 import 'package:epicest_project/notifiers/map_notifier.dart';
 import 'package:epicest_project/notifiers/suggestion_notifier.dart';
@@ -57,10 +59,9 @@ class SearchSuggestion extends StatelessWidget
               Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             }
             else{
-              print("Booger");
+              Provider.of<Favorites>(context, listen: false).setVisible(true);
               Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo);
               Provider.of<SuggestionNotifier>(context, listen: false).setVisibility(false);
-
             }
           },
           style: const ButtonStyle(
