@@ -18,6 +18,7 @@ class MapNotifier extends ChangeNotifier
 
   void setPoint(SearchInfo searchInfo) async
   {
+    _mapController.removeMarker(_geoPoint);
     _geoPoint = searchInfo.point!;
     _searchInfo = searchInfo;
     _moveAndZoom();
@@ -31,15 +32,5 @@ class MapNotifier extends ChangeNotifier
     {
       await _mapController.setZoom(zoomLevel: 19, stepZoom: 5);
     }
-    else {
-      await _mapController.setZoom(zoomLevel: 10, stepZoom: 5);
-      _mapController.addMarker(_geoPoint, markerIcon:const MarkerIcon(
-          icon: Icon(
-            Icons.location_city,
-            color: Colors.red,
-            size: 100,
-          )));
-    }
-
   }
 }
