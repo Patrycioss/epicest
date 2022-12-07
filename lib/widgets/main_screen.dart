@@ -45,10 +45,9 @@ class _MainScreenState extends State<MainScreen>
               ChangeNotifierProvider(create: (context) => MapNotifier()),
               ChangeNotifierProvider(create: (context) => InformationNotifier()),
             ],
-
             builder: (context, child)
             {
-              BuildContextStorer.context = context;
+              BuildContextStorer.mainScreenContext = context;
               return Scaffold
               (
                 extendBodyBehindAppBar: true,

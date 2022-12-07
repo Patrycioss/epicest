@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:provider/provider.dart';
 
+import '../build_context_storer/build_context_storer.dart';
 import '../favorites/favorites.dart';
 import '../utils/information.dart';
 
@@ -56,7 +57,10 @@ class SearchSuggestion extends StatelessWidget
               Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             }
             else{
+              print("Booger");
               Provider.of<Favorites>(context, listen: false).addFavorite(searchInfo);
+              Provider.of<SuggestionNotifier>(context, listen: false).setVisibility(false);
+
             }
           },
           style: const ButtonStyle(
