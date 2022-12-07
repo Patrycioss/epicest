@@ -20,21 +20,15 @@ class _InAppMapState extends State<InAppMap>
     Provider.of<MapNotifier>(context, listen: false)
         .mapController.addMarker
       (
-        GeoPoint
-        (
-          latitude: 52.219772238231606,
-          longitude: 6.889461611120473
-        )
-      , markerIcon:
-          const MarkerIcon
+        Provider.of<MapNotifier>(context,listen: false).geoPoint,
+
+        markerIcon:
+          MarkerIcon
           (
-            icon:
-              Icon
-              (
-                Icons.school,
-                color: Colors.green,
-                size: 70,
-              ),
+            assetMarker: AssetMarker(
+              image: AssetImage('assets/marker_small.png'),
+              scaleAssetImage: 0.5,
+            ),
           )
     );
 
@@ -71,13 +65,13 @@ class _InAppMapState extends State<InAppMap>
 
             directionArrowMarker:
             const MarkerIcon
-              (
+            (
               icon:
-              Icon
+                Icon
                 (
-                Icons.double_arrow,
-                size: 48,
-              ),
+                  Icons.double_arrow,
+                  size: 48,
+                ),
             ),
           ),
 

@@ -12,28 +12,55 @@ class _InformationWidgetState extends State<InformationWidget>
 {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        height: Information.i.appSize.height*0.25,
-        child: Column
-          (
-          children:
-          [
-            const  Image(
-              image: AssetImage('assets/epy_drost_banner.png'),
+    return Opacity(
+      opacity: 0.9,
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        child: SizedBox(
+          height: Information.i.appSize.height*0.4,
+          child: Column
+            (
+            children:
+            [
+              const  Image(
+                image: AssetImage('assets/epy_drost_banner.png'),
 
-            ),
-            Container(
-              color: Colors.white,
-              child: const ListTile
-                (
-                leading: Icon(Icons.school),
-                title: Text('Epy Drost'),
-                subtitle: Text('Saxion University of Applied Sciences Enschede'),
               ),
-            ),
-          ],
+              Container(
+                color: Colors.white,
+                child: const ListTile
+                  (
+                  leading: Icon(Icons.school),
+                  title: Text('Epy Drost'),
+                  subtitle: Text('Saxion University of Applied Sciences Enschede'),
+                ),
+              ),
+              Container(
+                height: Information.i.appSize.height*0.15,
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(20, 0, 0,0),
+                child:
+                  MediaQuery.removePadding(
+                    context: (context),
+                    removeTop: true,
+                    child: ListView
+                    (
+                      addSemanticIndexes: true,
+                      children:
+                      const
+                      [
+                        Text('\u2022 Two Toilets - ground floor and 5th floor'),
+                        Text('\u2022 4 elevators'),
+                        Text('\u2022 No stairs blocking entrances to classrooms'),
+                        Text('\u2022 Small pathways'),
+                        Text('\u2022 Automatic door can be stopped and opened up to let in someone with a wheelchair'),
+                      ],
+
+                    ),
+                  ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:epicest_project/favorites/favorites.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/IntroScreen.dart';
 import '../widgets/main_screen.dart';
 import '../widgets/settings_widget.dart';
 
@@ -14,10 +15,10 @@ class StateManager extends ChangeNotifier{
   HashMap<String, Widget> widgets = HashMap<String, Widget>();
 
   StateManager(){
-    widgets.addAll({"IntroPage": MainScreen(_favorites)});
+    widgets.addAll({"IntroPage": IntroScreen()});
     widgets.addAll({"MainPage": MainScreen(_favorites)});
     widgets.addAll({"SettingsPage": SettingsWidget(_favorites, _scaffoldKey)});
-    setCurrentState(widgets.entries.first.key);
+    setCurrentState("IntroPage");
   }
 
   void setCurrentState(String state){
