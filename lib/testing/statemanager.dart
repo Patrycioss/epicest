@@ -14,6 +14,7 @@ class StateManager extends ChangeNotifier{
   HashMap<String, Widget> widgets = HashMap<String, Widget>();
 
   StateManager(){
+    widgets.addAll({"IntroPage": MainScreen(_favorites)});
     widgets.addAll({"MainPage": MainScreen(_favorites)});
     widgets.addAll({"SettingsPage": SettingsWidget(_favorites, _scaffoldKey)});
     setCurrentState(widgets.entries.first.key);

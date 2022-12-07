@@ -9,7 +9,10 @@ import '../testing/statemanager.dart';
 class Favorites extends ChangeNotifier{
 
   final List<Widget> suggestions = [];
-
+  bool _visible = false;
+  bool get visible => _visible;
+  bool _ended = false;
+  bool get ended => _ended;
   /*Favorites(){
     SearchInfo info = SearchInfo(point: GeoPoint(latitude: 52.21979168320528, longitude: 6.889457162218579), address: Address(postcode: "7511 JL", city: "Enschede", street: "Van Galenstraat 19", country: "Netherlands"));
     String? name = info.address?.city;
@@ -25,6 +28,11 @@ class Favorites extends ChangeNotifier{
         ),
     );
   }*/
+
+  void setVisible(bool visible){
+    _visible = visible;
+    notifyListeners();
+  }
 
   void addFavorite(SearchInfo suggestion){
     String? state = suggestion.address?.state;

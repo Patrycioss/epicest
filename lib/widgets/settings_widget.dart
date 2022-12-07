@@ -1,3 +1,4 @@
+import 'package:epicest_project/favorites/notification_favorite.dart';
 import 'package:epicest_project/widgets/search_bar.dart';
 import 'package:epicest_project/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
@@ -105,38 +106,42 @@ class _SettingsWidget extends State<SettingsWidget>{
                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: ListView(
                   children: [
-                    Column(
+                    Stack(
                       children: [
-                        const Text("Add a favorite address!"),//for physical keyboard press
-                        SearchBar(_controller, true),
-                      ],
-                    ),
-                    Container
-                    (
-                      alignment: Alignment.center,
-                      child: Visibility(
-                          visible: Provider.of<SuggestionNotifier>(context).visible,
-                          child: const SearchSuggestions(true)
-                      ),
-                    ),
+                        Column(
+                          children: [
+                            const Text("Add a favorite address!"),//for physical keyboard press
+                            SearchBar(_controller, true),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Visibility(
+                                  visible: Provider.of<SuggestionNotifier>(context).visible,
+                                  child: const SearchSuggestions(true)
+                              ),
+                            ),
 
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 20, 0,10),
-                      child: const Center(child: Text
-                        ('Highlights',
-                        style: TextStyle
-                          (
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 20, 0,10),
+                              child: const Center(child: Text
+                                ('Highlights',
+                                style: TextStyle
+                                  (
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )),
+                            ),
+
+                            Column(
+                              children: const [
+                                HighlightWidget(),
+                              ],
+                            )
+                          ],
                         ),
-                      )),
-                    ),
-
-                    Column(
-                      children: const [
-                        HighlightWidget(),
+                        const NotificationFavorite(),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
