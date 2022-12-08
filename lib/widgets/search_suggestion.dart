@@ -52,11 +52,14 @@ class SearchSuggestion extends StatelessWidget
         child: TextButton(
           onPressed: ()
           {
+            print(searchInfo.point);
+
+            Provider.of<InformationNotifier>(context, listen: false).setVisibility(searchInfo.point == Information.epyDrost);
+
             if (kDebugMode) print('Click');
             if(!favorites){
               Provider.of<SuggestionNotifier>(context,listen: false).setVisibility(false);
               Provider.of<MapNotifier>(context, listen: false).setPoint(searchInfo);
-              Provider.of<InformationNotifier>(context,listen: false).setVisibility(true);
             }
             else{
               Provider.of<Favorites>(context, listen: false).setVisible(true);

@@ -1,5 +1,8 @@
 import 'package:epicest_project/utils/information.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../notifiers/information_notifier.dart';
 
 class InformationWidget extends StatefulWidget
 {
@@ -19,12 +22,31 @@ class _InformationWidgetState extends State<InformationWidget>
         child: SizedBox(
           height: Information.i.appSize.height*0.4,
           child: Column
-            (
+          (
             children:
             [
-              const  Image(
-                image: AssetImage('assets/epy_drost_banner.png'),
+              Stack(
 
+                children: [
+
+                  const  Image(
+                    image: AssetImage('assets/epy_drost_banner.png'),
+                  ),
+
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: IconButton
+                    (
+                      onPressed: ()
+                      {
+                        Provider.of<InformationNotifier>(context, listen: false).setVisibility(false);
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Container(
                 color: Colors.white,
@@ -55,7 +77,6 @@ class _InformationWidgetState extends State<InformationWidget>
                         Text('\u2022 Small pathways'),
                         Text('\u2022 Automatic door can be stopped and opened up to let in someone with a wheelchair'),
                       ],
-
                     ),
                   ),
               )
@@ -64,27 +85,5 @@ class _InformationWidgetState extends State<InformationWidget>
         ),
       ),
     );
-    // return Card(
-    //   color: const Color.fromARGB(255, 160,207, 236),
-    //   child: SizedBox(
-    //     height: Information.i.appSize.height/4,
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: <Widget>[
-    //         Container(
-    //           decoration: const BoxDecoration(
-    //             color: Color.fromARGB(255, 113,198, 201),
-    //           ),
-    //           child: const ListTile(
-    //             leading: Icon(Icons.school),
-    //             title: Text('Epy Drost'),
-    //             subtitle: Text('Saxion University of Applied Sciences Enschede'),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
-
 }

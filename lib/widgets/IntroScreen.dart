@@ -82,26 +82,4 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       );
     }
-
-    // const oneSec = Duration(milliseconds: 200);
-    // int added = 0;
-    // return Lottie.asset('assets/splash_screen_new.json',
-    //   onLoaded: (composition){
-    //     Timer.periodic(
-    //       oneSec,
-    //           (Timer timer) => setState(() {
-    //         if (added >= 4000) {
-    //           print("Tested");
-    //           timer.cancel();
-    //           Provider.of<StateManager>(context, listen:false).setCurrentState("MainPage");
-    //           added = 0;
-    //         }
-    //         else {
-    //           print("Testing");
-    //           added = added + oneSec.inMilliseconds;
-    //         }
-    //       },
-    //       ),
-    //     );
-    //   });
 }
