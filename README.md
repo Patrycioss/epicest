@@ -5,3 +5,18 @@ We decided to do this by making an app that will help them in a google maps like
 
 
 See our [poster](poster.pdf) and the [walkthrough](https://youtu.be/XTQS1sB2758)
+
+## Team
+
+### Artists
+* Dominik Babuščák
+* Jessie Rijnders
+* Wessel Storm
+
+### Designers
+* Elio Bouwhuis
+* Bodee Leusink
+
+### Engineers
+* Patrick Schuur
+* Wiebe Sportel
